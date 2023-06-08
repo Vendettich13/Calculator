@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Calculator</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="calculator-container">
+            <input class="calculator-result" @keyup.enter="calc" v-model="result" type="text" placeholder="0">
+            <button class="calculator-button" @click="input(num)" v-for="num in numbers">{{num}}</button>
+            <button class="calculator-operator" @click="input(operation)"
+                v-for="operation in operations">{{operation}}</button>
+            <button class="calculator-operator" @click="reset">R</button>
+            <button class="calculator-operator" @click="calc">=</button>
+        </div>
+    </div>
+
+
+</body>
+<script>
+    const { createApp } = Vue
+
+    createApp({
+        data() {
+            return {
+                result: '',
+                numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+                operations: ['+', '-', '*', '/']
+            }
+        },
+        methods: {
+            input: function (arg) {
+                for (const num of numbers) {
+                    if (num !== arg) {
+                        return
+                    }
+                }
+                this.result = this.result.toString()
+                this.result += arg
+            },
+            reset: function () {
+                this.result = ''
+            },
+            calc: function () {
+                this.result = eval(this.result)
+            }
+        },
+    }).mount('#app')
+</script>
+
+</html>
